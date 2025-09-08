@@ -1,0 +1,71 @@
+{
+  "name": "n8n-nodes-nele-ai",
+  "version": "1.0.0",
+  "description": "Use all nele.ai AI tools, chat completions and image generators via n8n.",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "ai",
+    "chat-completion",
+    "image-generation",
+    "nele-ai",
+    "openai",
+    "anthropic"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.nele.ai",
+  "author": {
+    "name": "Gal Digital GmbH",
+    "email": "info@gal-digital.de",
+    "url": "https://www.gal-digital.de"
+  },
+  "bugs": {
+    "url": "https://github.com/gal-digital-gmbh/n8n-nodes-nele-ai/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gal-digital-gmbh/n8n-nodes-nele-ai.git"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "npx rimraf dist && tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier config credentials nodes --write",
+    "lint": "eslint config credentials nodes",
+    "lint:fix": "eslint config credentials nodes --fix",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/NeleAi/NeleAiApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/NeleAi/NeleAi.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@typescript-eslint/parser": "~8.32.0",
+    "eslint": "^9.35.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "n8n-workflow": "^1.105.0",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "form-data": "^4.0.4",
+    "zod": "^4.1.5"
+  },
+  "overrides": {
+    "form-data@4.0.0": "4.0.4"
+  }
+}
