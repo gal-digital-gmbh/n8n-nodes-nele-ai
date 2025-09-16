@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-nele-ai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Use all nele.ai AI tools, chat completions and image generators via n8n.",
   "keywords": [
     "n8n-community-node-package",
@@ -61,11 +61,8 @@
     "rimraf": "^6.0.1",
     "typescript": "^5.8.2"
   },
-  "dependencies": {
-    "form-data": "^4.0.4",
-    "zod": "^4.1.5"
-  },
-  "overrides": {
-    "form-data@4.0.0": "4.0.4"
+  "peerDependencies": {
+    "form-data": "^4.0.0",
+    "zod": "^3.25.67"
   }
 }
