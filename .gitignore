@@ -5,3 +5,4 @@ tmp
 dist
 npm-debug.log*
 .vscode/launch.json
+package-lock.json

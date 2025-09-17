@@ -1,3 +1,4 @@
+import { NodeConnectionType } from 'n8n-workflow';
 import { env } from '../../config/env';
 import audio from './audio';
 import chat from './chat';
@@ -17,8 +18,8 @@ export class NeleAi implements INodeType {
     defaults: {
       name: 'nele.ai',
     },
-    inputs: ['main'],
-    outputs: ['main'],
+    inputs: [NodeConnectionType.Main],
+    outputs: [NodeConnectionType.Main],
 
     icon: {
       dark: 'file:logo-dark.svg',
