@@ -1,5 +1,10 @@
-import type { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
 import { env } from '../../config/env';
+import type {
+  IAuthenticateGeneric,
+  ICredentialTestRequest,
+  ICredentialType,
+  INodeProperties,
+} from 'n8n-workflow';
 
 export class NeleAiApi implements ICredentialType {
   name = env.credentials.apiKey;
@@ -25,6 +30,13 @@ export class NeleAiApi implements ICredentialType {
       headers: {
         Authorization: '={{"Bearer " + $credentials.apiKey}}',
       },
+    },
+  };
+
+  test: ICredentialTestRequest = {
+    request: {
+      baseURL: env.baseUrl,
+      url: '/settings',
     },
   };
 }

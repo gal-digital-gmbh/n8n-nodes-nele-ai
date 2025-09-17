@@ -1,6 +1,4 @@
-import FormData from 'form-data';
 import { NodeOperationError } from 'n8n-workflow';
-import z from 'zod';
 import { audioTranscriptionFields } from './fields';
 import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 
@@ -36,33 +34,14 @@ export const operations: INodeProperties[] = [
           send: {
             preSend: [
               async function addBinaryFileInput(this, requestOptions) {
-                const options = z
-                  .object({
-                    model: z.string(),
-                    language: z.string().optional(),
-                  })
-                  .safeParse(requestOptions.body);
+                const options = requestOptions.body as {
+                  model: string;
+                  language?: string;
+                };
 
-                if (!options.success) {
-                  throw new NodeOperationError(this.getNode(), 'Invalid options', {
-                    level: 'info',
-                    description: 'The options parameter is not valid',
-                  });
-                }
+                const input = this.getInputData().binary;
 
-                const input = z
-                  .object({
-                    binary: z.object({
-                      data: z.object({
-                        data: z.string(),
-                        fileName: z.string(),
-                        mimeType: z.string(),
-                      }),
-                    }),
-                  })
-                  .safeParse(this.getInputData());
-
-                if (!input.success) {
+                if (!input) {
                   throw new NodeOperationError(this.getNode(), 'Invalid input', {
                     level: 'info',
                     description:
@@ -70,25 +49,31 @@ export const operations: INodeProperties[] = [
                   });
                 }
 
-                const file = Buffer.from(input.data.binary.data.data, 'base64');
+                const file = Buffer.from(input.data.data, 'base64');
 
-                const form = new FormData();
+                const boundary = `----WebKitFormBoundary${Math.random().toString(16)}`;
+                const endBoundary = `\r\n--${boundary}--\r\n`;
 
-                form.append('file', file, {
-                  filename: input.data.binary.data.fileName,
-                  contentType: input.data.binary.data.mimeType,
-                });
+                let textPart = `--${boundary}\r\nContent-Disposition: form-data; name="model"\r\n\r\n${options.model}\r\n`;
 
-                form.append('model', options.data.model);
-
-                if (options.data.language) {
-                  form.append('language', options.data.language);
+                if (options.language) {
+                  textPart += `--${boundary}\r\nContent-Disposition: form-data; name="language"\r\n\r\n${options.language}\r\n`;
                 }
 
-                requestOptions.body = form;
+                const binaryPart = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${input.data.fileName}"\r\nContent-Type: ${input.data.mimeType}\r\n\r\n`;
+
+                const payload = Buffer.concat([
+                  Buffer.from(textPart, 'utf8'),
+                  Buffer.from(binaryPart, 'utf8'),
+                  file,
+                  Buffer.from(endBoundary, 'utf8'),
+                ]);
+
+                requestOptions.body = payload;
                 requestOptions.headers = {
                   ...requestOptions.headers,
-                  ...form.getHeaders(),
+                  'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                  'Content-Length': payload.length,
                 };
 
                 return requestOptions;
