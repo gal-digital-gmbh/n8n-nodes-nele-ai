@@ -1,5 +1,5 @@
-import { assertParamIsString } from 'n8n-workflow';
 import { env } from '../../../config/env';
+import { assertParamIsString } from '../../../support/asserts';
 import type { LoadOptions } from '../types/load-options';
 
 type Model = {
