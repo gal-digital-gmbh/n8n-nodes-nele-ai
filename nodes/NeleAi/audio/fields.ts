@@ -1,8 +1,6 @@
-import { NodeOperationError } from 'n8n-workflow';
 import { routeToParameter } from '../support/route-to-parameter';
 import { modelOptions } from './options';
 import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
-import z from 'zod';
 
 const displayOptions = {
   show: {
@@ -39,28 +37,7 @@ export const audioTranscriptionFields: INodeProperties[] = [
         default: '',
         description:
           'The language of the input audio, in iso-639-1 format. Optional, but improves transcription accuracy.',
-        routing: routeToParameter('language', {
-          preSend: [
-            async function validateLanguage(this, requestOptions) {
-              const options = z
-                .object({
-                  language: z.union([z.literal(''), z.string().regex(/^[a-z]{2}$/i)]).optional(),
-                })
-                .safeParse(this.getNodeParameter('options', {}));
-
-              if (!options.success) {
-                throw new NodeOperationError(this.getNode(), 'Invalid language', {
-                  level: 'info',
-                  description:
-                    'The language must be a valid ISO 639-1 language code (e.g., "en", "fr")',
-                  itemIndex: this.getItemIndex(),
-                });
-              }
-
-              return requestOptions;
-            },
-          ],
-        }),
+        routing: routeToParameter('language'),
       },
     ],
   },
