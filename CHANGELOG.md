@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4
+
+- change operations from declarative to programmatic
+- support data expressions in all parameters
+
 ## 1.0.3
 
 - add credential test

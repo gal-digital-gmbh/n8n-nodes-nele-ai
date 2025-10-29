@@ -1,4 +1,3 @@
-import { routeToParameter } from '../support/route-to-parameter';
 import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 
 const displayOptions = {
@@ -18,7 +17,6 @@ export const documentCollectionSearchFields: INodeProperties[] = [
     default: '',
     description:
       'The nele.ai knowledge database to query from. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-    routing: routeToParameter('model'),
     typeOptions: {
       loadOptions: {
         routing: {
@@ -66,7 +64,6 @@ export const documentCollectionSearchFields: INodeProperties[] = [
     name: 'query',
     type: 'string',
     default: '',
-    routing: routeToParameter('query'),
   },
   {
     displayName: 'Result Count',
@@ -79,7 +76,6 @@ export const documentCollectionSearchFields: INodeProperties[] = [
       minValue: 1,
       maxValue: 20,
     },
-    routing: routeToParameter('limit'),
   },
   {
     displayName: 'Max Distance',
@@ -91,6 +87,5 @@ export const documentCollectionSearchFields: INodeProperties[] = [
       minValue: 0,
       maxValue: 1,
     },
-    routing: routeToParameter('max_distance'),
   },
 ];

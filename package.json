@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-nele-ai",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use all nele.ai AI tools, chat completions and image generators via n8n.",
   "keywords": [
     "n8n-community-node-package",

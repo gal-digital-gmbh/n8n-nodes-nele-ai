@@ -1,4 +1,3 @@
-import { routeToParameter } from '../support/route-to-parameter';
 import { modelOptions } from './options';
 import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 
@@ -19,7 +18,6 @@ export const audioTranscriptionFields: INodeProperties[] = [
     default: '',
     description:
       'AI model that should transcribe the audio file. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-    routing: routeToParameter('model'),
     options: modelOptions,
   },
   {
@@ -37,7 +35,6 @@ export const audioTranscriptionFields: INodeProperties[] = [
         default: '',
         description:
           'The language of the input audio, in iso-639-1 format. Optional, but improves transcription accuracy.',
-        routing: routeToParameter('language'),
       },
     ],
   },
