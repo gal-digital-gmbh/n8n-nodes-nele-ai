@@ -5,7 +5,16 @@ import chat from './chat';
 import documentCollection from './document-collection';
 import image from './image';
 import model from './model';
-import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from 'n8n-workflow';
+import type { ExecuteFunction } from './types/execute-function';
+
+const executeFunctions: Record<string, Record<string, ExecuteFunction>> = {
+  audio: audio.execute,
+  chat: chat.execute,
+  documentCollection: documentCollection.execute,
+  image: image.execute,
+  model: model.execute,
+};
 
 export class NeleAi implements INodeType {
   description: INodeTypeDescription = {
@@ -91,4 +100,22 @@ export class NeleAi implements INodeType {
       ...image.loadOptions,
     },
   };
+
+  async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+    const items = this.getInputData();
+    const returnData: INodeExecutionData[][] = [];
+
+    for (let itemIndex = 0; itemIndex < items.length; itemIndex += 1) {
+      const resource = this.getNodeParameter('resource', itemIndex);
+      const operation = this.getNodeParameter('operation', itemIndex);
+
+      if (executeFunctions[resource]?.[operation]) {
+        const response = await executeFunctions[resource][operation](this, itemIndex);
+
+        returnData.push(response);
+      }
+    }
+
+    return returnData;
+	}
 }

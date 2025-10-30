@@ -1,4 +1,3 @@
-import { routeToParameter } from '../support/route-to-parameter';
 import { backgroundDisplayOptions, styleDisplayOptions } from './options';
 import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 
@@ -19,7 +18,6 @@ export const imageGenerationFields: INodeProperties[] = [
     default: '',
     description:
       'AI model that should generate the picture. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-    routing: routeToParameter('model'),
     typeOptions: {
       loadOptions: {
         routing: {
@@ -62,7 +60,6 @@ export const imageGenerationFields: INodeProperties[] = [
     type: 'string',
     default: '',
     required: true,
-    routing: routeToParameter('prompt'),
     typeOptions: {
       rows: 4,
     },
@@ -75,7 +72,6 @@ export const imageGenerationFields: INodeProperties[] = [
     description:
       'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
     default: '',
-    routing: routeToParameter('modelConfiguration.quality'),
     typeOptions: {
       loadOptionsDependsOn: ['model'],
       loadOptionsMethod: 'imageGenerationLoadQualityOptions',
@@ -89,7 +85,6 @@ export const imageGenerationFields: INodeProperties[] = [
     description:
       'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
     default: '',
-    routing: routeToParameter('modelConfiguration.size'),
     typeOptions: {
       loadOptionsDependsOn: ['model'],
       loadOptionsMethod: 'imageGenerationLoadSizeOptions',
@@ -109,7 +104,6 @@ export const imageGenerationFields: INodeProperties[] = [
     description:
       'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
     default: '',
-    routing: routeToParameter('modelConfiguration.style'),
     typeOptions: {
       loadOptionsDependsOn: ['model'],
       loadOptionsMethod: 'imageGenerationLoadStyleOptions',
@@ -129,7 +123,6 @@ export const imageGenerationFields: INodeProperties[] = [
     description:
       'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
     default: '',
-    routing: routeToParameter('modelConfiguration.background'),
     typeOptions: {
       loadOptionsDependsOn: ['model'],
       loadOptionsMethod: 'imageGenerationLoadBackgroundOptions',

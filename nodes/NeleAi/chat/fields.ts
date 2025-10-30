@@ -1,4 +1,3 @@
-import { routeToParameter } from '../support/route-to-parameter';
 import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 
 const displayOptions = {
@@ -18,7 +17,6 @@ export const chatCompletionFields: INodeProperties[] = [
     default: '',
     description:
       'AI model that should generate the text response. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-    routing: routeToParameter('model'),
     typeOptions: {
       loadOptionsMethod: 'chatCompletionLoadModels',
     },
@@ -72,13 +70,6 @@ export const chatCompletionFields: INodeProperties[] = [
     type: 'hidden',
     default: [],
     required: true,
-    routing: {
-      send: {
-        property: 'messages',
-        value: '={{$parameter.messages.message}}',
-        type: 'body',
-      },
-    },
   },
   {
     displayName: 'Options',
@@ -95,7 +86,6 @@ export const chatCompletionFields: INodeProperties[] = [
         default: '',
         description:
           'If set, will retrieve data with context of the last given user message. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-        routing: routeToParameter('documentCollectionId'),
         typeOptions: {
           loadOptionsMethod: 'chatCompletionLoadCollections',
           loadOptionsDependsOn: ['model'],
@@ -107,7 +97,6 @@ export const chatCompletionFields: INodeProperties[] = [
         type: 'number',
         default: 200,
         description: 'Maximum tokens in the generated reply',
-        routing: routeToParameter('max_tokens'),
         typeOptions: { minValue: 1 },
       },
       {
@@ -117,7 +106,6 @@ export const chatCompletionFields: INodeProperties[] = [
         default: 0,
         description:
           'What sampling temperature to use. Higher values will make the output more random, while lower values will make it more deterministic.',
-        routing: routeToParameter('temperature'),
         typeOptions: { minValue: 0, maxValue: 1, numberStep: 0.01 },
       },
     ],
